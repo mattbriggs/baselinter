@@ -14,15 +14,15 @@ Base Linter is a command-line interface app checks for sets of words in a text b
 
 ## Install Base Linter
 
-1.  You can download the GitHub repo.
-2.  Unzip it.
+1.  In your git client, type:
+    git clone https://github.com/mattbriggs/baselinter.git.
 3.  Navigate ot the package location, and then type:
 4.  Type:  
     ```pip install <location>\Baselinter```
 
 Or you can install directly from the repo:
 
-    ```pip install https://github.com/mattbriggs/Baselinter```
+    ```pip install git+https://github.com/mattbriggs/baselinter.git@master```
 
 ## Run Base Linter
 
