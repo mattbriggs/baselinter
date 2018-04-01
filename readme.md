@@ -1,7 +1,7 @@
 # Base Linter
 
 **Version:**  Version 0.1  
-**Date:**  March 24, 2015  
+**Date:**  March 24, 2018  
 **Who:** Matt Briggs
 
 Base Linter is a command-line interface app checks for sets of words in a text by order. Each time the app encounters a word belonging to a set, it prompts you to choose which of the words in the set. The app will replace the word in that position in the word order in the text you are checking. When you're done, the app saves the updated text as a file with the date in the filename.
