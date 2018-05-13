@@ -16,9 +16,11 @@ import baselinter as BS
 
 # Global Variables
 
-THISDATE = str(datetime.date.today()) # e:\MB\Better-Butter\Projects\BaseLinter
+THISDATE = str(datetime.date.today())
 LIST_of_SETS = []
 LINTER_NAME = ""
+FILESTEM = ""
+FILEEXT = ""
 
 # Functions
 
@@ -39,6 +41,7 @@ def text_to_list(filename):
     try:
         with open(filename) as f:
             in_text = f.read()
+            in_text = in_text.replace("\n", "~99")
             text_list = in_text.split()
             return text_list
     except FileNotFoundError:
@@ -52,6 +55,7 @@ def wordlist_to_text(wordlist):
     text_out = ""
     for w in wordlist:
         text_out = text_out + w + " "
+    text_out = text_out.replace("~99", "\n")
     text_out = text_out.strip()
     return text_out
 
@@ -83,6 +87,8 @@ def select_update(choices, wordlist, wordloc):
     preview_list = preview_list[preview_start:preview_end]
     display_string = ""
     for w in preview_list:
+        if w == "~99":
+            w = " [p] "
         display_string = display_string + w + " "
         display_string.strip()
     display_choices = ""
@@ -113,7 +119,8 @@ def load_linter():
     global LIST_of_SETS
     global LINTER_NAME
 
-    linters = { "American Homophone" : "\\data\\guide-amhomo.json",
+    linters = { "Common Errors" : "\\data\\guide-common.json",
+                "American Homophone" : "\\data\\guide-amhomo.json",
                 "MS Docs Voice Guide" : "\\data\\guide-msdocs.json",
                 "Business Jargon" : "\\data\\guide-businessjargon.json"}
     print("Choose a new linter.\n")
@@ -131,15 +138,19 @@ def load_linter():
 
 
 def exit_app():
-    '''Save the data; close the app.'''
+    '''Close the app.'''
     print("Goodbye.")
     return False
 
 
 def check_file():
     ''' '''
+    global FILESTEM
+    global FILEEXT
+
     try:
         filename = input("File to check. > ")
+        FILESTEM, FILEEXT = os.path.splitext(filename)
     except FileNotFoundError:
         print("Please try a valid file name.")
         return True
@@ -149,7 +160,7 @@ def check_file():
         if choices:
             wordlist = select_update(choices, wordlist, wordloc)
     outtext = wordlist_to_text(wordlist)
-    filename_out = filename.split(".")[0] + "-" + THISDATE + "." + filename.split(".")[1]
+    filename_out = FILESTEM + "-" + THISDATE + FILEEXT
     print("Done checking. Saving file as {}".format(filename_out))
     with open(filename_out, 'w') as f:
         f.write(outtext)
@@ -167,9 +178,9 @@ def main():
     global LINTER_NAME
     global LIST_of_SETS
 
-    LINTER_NAME = "American Homophone"
+    LINTER_NAME = "Common Errors in English"
     
-    LIST_of_SETS = open_set_json(os.path.dirname(BS.__file__) + "\\data\\guide-amhomo.json")
+    LIST_of_SETS = open_set_json(os.path.dirname(BS.__file__) + "\\data\\guide-common.json")
 
     run = True
     while run == True:
